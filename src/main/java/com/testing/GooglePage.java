@@ -16,13 +16,13 @@ public class GooglePage extends PageFactory {
     private final static Logger logger = Logger.getLogger(GooglePage.class.getName());
 
     private final static String SEARCH_BOX = "//input[@name='q']";
-    private final static String SEARCH_OUTPUT_LINK_G = "//h3[@class='LC20lb']";
+    private final static String SEARCH_OUTPUT_LINK = "//h3[@class='LC20lb']";
 
     @FindBy(how = How.XPATH, using = SEARCH_BOX)
     private WebElement searchBox;
 
-    @FindBy(how = How.XPATH, using = SEARCH_OUTPUT_LINK_G)
-    private List<WebElement> searchOutputLinkG;
+    @FindBy(how = How.XPATH, using = SEARCH_OUTPUT_LINK)
+    private List<WebElement> searchOutputLink;
 
     public GooglePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -40,25 +40,24 @@ public class GooglePage extends PageFactory {
     public boolean isSearchOutputLinkPresent() throws InterruptedException {
         logger.info("Checking if search output link is present");
         Thread.sleep(1000);
-        return searchOutputLinkG.size() > 0 && searchOutputLinkG.get(0).isDisplayed();
+        return searchOutputLink.size() > 0 && searchOutputLink.get(0).isDisplayed();
     }
 
     public String getSearchOutputLink(int current) throws InterruptedException {
-        logger.info("Retrieving the content of search output link: " + searchOutputLinkG.get(current).getText());
+        logger.info("Retrieving the content of search output link: " + searchOutputLink.get(current).getText());
         Thread.sleep(1000);
-        return searchOutputLinkG.get(current).getText();
+        return searchOutputLink.get(current).getText();
     }
 
     public void clickSearchOutputLink(int current) throws InterruptedException {
-        logger.info("Size: " + searchOutputLinkG.size());
-        logger.info("Clicking search output link '" + searchOutputLinkG.get(current).getText() + "'");
+        logger.info("Clicking search output link '" + searchOutputLink.get(current).getText() + "'");
         Thread.sleep(1000);
-        searchOutputLinkG.get(current).click();
+        searchOutputLink.get(current).click();
     }
 
     public List<String> getSearchOutputLinks() throws InterruptedException {
         logger.info("Retrieving search output links");
         Thread.sleep(1000);
-        return searchOutputLinkG.stream().map(el -> el.getText()).collect(Collectors.toList());
+        return searchOutputLink.stream().map(el -> el.getText()).collect(Collectors.toList());
     }
 }

@@ -16,12 +16,12 @@ public class BingPage extends PageFactory {
     private final static Logger logger = Logger.getLogger(BingPage.class.getName());
 
     private final static String SEARCH_BOX = "//input[@name='q']";
-    private final static String SEARCH_OUTPUT_LINK_B = "//h2/a";
+    private final static String SEARCH_OUTPUT_LINK = "//h2/a";
 
     @FindBy(how = How.XPATH, using = SEARCH_BOX)
     private WebElement searchBox;
 
-    @FindBy(how = How.XPATH, using = SEARCH_OUTPUT_LINK_B)
+    @FindBy(how = How.XPATH, using = SEARCH_OUTPUT_LINK)
     private List<WebElement> searchOutputLink;
 
     public BingPage(WebDriver webDriver) {

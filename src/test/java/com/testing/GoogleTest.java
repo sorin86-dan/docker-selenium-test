@@ -2,10 +2,8 @@ package com.testing;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -14,8 +12,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Properties;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -26,9 +25,12 @@ public class GoogleTest {
     private static GooglePage googlePage;
 
     @BeforeClass
-    public static void setUp() throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities(new ChromeOptions());
-        webDriver = new RemoteWebDriver(new URL("http://172.18.0.3:5555/wd/hub"), capabilities);
+    public static void setUp() throws IOException {
+        Properties props = new Properties();
+        DesiredCapabilities capabilities = new DesiredCapabilities(new FirefoxOptions());
+
+        props.load(GoogleTest.class.getClassLoader().getResourceAsStream("config.properties"));
+        webDriver = new RemoteWebDriver(new URL(props.getProperty("url-firefox")), capabilities);
         googlePage = new GooglePage(webDriver);
 
         webDriver.manage().window().maximize();
