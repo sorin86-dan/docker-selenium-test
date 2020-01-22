@@ -91,7 +91,7 @@ public class BingTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver = new RemoteWebDriver(new URL(props.getProperty("url-chrome" + id)), capabilities);
+        webDriver = new RemoteWebDriver(new URL(props.getProperty("url-chrome")), capabilities);
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
         bingPage = new BingPage(webDriver);
 

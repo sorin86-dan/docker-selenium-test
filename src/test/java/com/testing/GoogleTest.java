@@ -92,7 +92,7 @@ public class GoogleTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver = new RemoteWebDriver(new URL(props.getProperty("url-firefox" + id)), capabilities);
+        webDriver = new RemoteWebDriver(new URL(props.getProperty("url-firefox")), capabilities);
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
         googlePage = new GooglePage(webDriver);
 
