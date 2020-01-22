@@ -34,30 +34,25 @@ public class BingPage extends PageFactory {
         searchBox.clear();
         searchBox.sendKeys(text);
         searchBox.submit();
-        Thread.sleep(1000);
     }
 
     public boolean isSearchOutputLinkPresent() throws InterruptedException {
         logger.info("Checking if search output link is present");
-        Thread.sleep(1000);
         return searchOutputLink.size() > 0 && searchOutputLink.get(0).isDisplayed();
     }
 
     public String getSearchOutputLink(int current) throws InterruptedException {
         logger.info("Retrieving the content of search output link: " + searchOutputLink.get(current).getText());
-        Thread.sleep(1000);
         return searchOutputLink.get(current).getText();
     }
 
     public void clickSearchOutputLink(int current) throws InterruptedException {
         logger.info("Clicking search output link '" + searchOutputLink.get(current).getText() + "'");
         searchOutputLink.get(current).click();
-        Thread.sleep(1000);
     }
 
     public List<String> getSearchOutputLinks() throws InterruptedException {
         logger.info("Retrieving search output links");
-        Thread.sleep(1000);
         return searchOutputLink.stream().map(el -> el.getText()).collect(Collectors.toList());
     }
 }

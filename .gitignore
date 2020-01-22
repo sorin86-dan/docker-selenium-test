@@ -2,5 +2,5 @@
 *.iml
 .git
 target
-test-bing.png
-test-google.png
+test-bing*.png
+test-google*.png
