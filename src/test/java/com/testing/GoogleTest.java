@@ -1,21 +1,21 @@
 package com.testing;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -23,6 +23,7 @@ import static org.testng.Assert.assertTrue;
 public class GoogleTest {
 
     private static WebDriver webDriver;
+    private final static Logger logger = Logger.getLogger(GoogleTest.class.getName());
     private static GooglePage googlePage;
     private static Properties props = new Properties();
     private static DesiredCapabilities capabilities = new DesiredCapabilities(new FirefoxOptions());
@@ -93,7 +94,11 @@ public class GoogleTest {
 
     public void runTest(int id) throws Exception {
         webDriver = new RemoteWebDriver(new URL(props.getProperty("url-firefox")), capabilities);
+
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
+        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS) ;
+        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS) ;
+
         googlePage = new GooglePage(webDriver);
 
         webDriver.manage().window().maximize();
@@ -102,8 +107,17 @@ public class GoogleTest {
 
         assertTrue(googlePage.isSearchOutputLinkPresent());
         assertEquals(googlePage.getSearchOutputLinks().size(), 10);
-        googlePage.clickSearchOutputLink(id);
-        takeSnapShot(webDriver, "test-google-" + id + ".png");
+
+        try {
+            googlePage.clickSearchOutputLink(id);
+        } catch (Exception e) {
+            logger.warning("test-google-" + id + ".png - " + getErrorMessage(e.getMessage()));
+            takeSnapShot(webDriver, "test-google-" + id + ".png");
+        }
+    }
+
+    private String getErrorMessage(String message) {
+        return message.substring(0, message.indexOf("\n"));
     }
 
     public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{

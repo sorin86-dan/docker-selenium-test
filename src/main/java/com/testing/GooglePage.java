@@ -29,29 +29,29 @@ public class GooglePage extends PageFactory {
         PageFactory.initElements(webDriver, this);
     }
 
-    public void fillSearchBox(String text) throws InterruptedException {
+    public void fillSearchBox(String text) {
         logger.info("Filling search box with '" + text + "'");
         searchBox.clear();
         searchBox.sendKeys(text);
         searchBox.submit();
     }
 
-    public boolean isSearchOutputLinkPresent() throws InterruptedException {
+    public boolean isSearchOutputLinkPresent() {
         logger.info("Checking if search output link is present");
         return searchOutputLink.size() > 0 && searchOutputLink.get(0).isDisplayed();
     }
 
-    public String getSearchOutputLink(int current) throws InterruptedException {
+    public String getSearchOutputLink(int current) {
         logger.info("Retrieving the content of search output link: " + searchOutputLink.get(current).getText());
         return searchOutputLink.get(current).getText();
     }
 
-    public void clickSearchOutputLink(int current) throws InterruptedException {
+    public void clickSearchOutputLink(int current) {
         logger.info("Clicking search output link '" + searchOutputLink.get(current).getText() + "'");
         searchOutputLink.get(current).click();
     }
 
-    public List<String> getSearchOutputLinks() throws InterruptedException {
+    public List<String> getSearchOutputLinks() {
         logger.info("Retrieving search output links");
         return searchOutputLink.stream().map(el -> el.getText()).collect(Collectors.toList());
     }

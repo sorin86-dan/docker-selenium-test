@@ -1,21 +1,21 @@
 package com.testing;
 
-import net.bytebuddy.utility.RandomString;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -23,6 +23,7 @@ import static org.testng.Assert.assertTrue;
 public class BingTest {
 
     private static WebDriver webDriver;
+    private final static Logger logger = Logger.getLogger(BingTest.class.getName());
     private static BingPage bingPage;
     private static Properties props = new Properties();
     private static DesiredCapabilities capabilities = new DesiredCapabilities(new ChromeOptions());
@@ -92,7 +93,11 @@ public class BingTest {
 
     public void runTest(int id) throws Exception {
         webDriver = new RemoteWebDriver(new URL(props.getProperty("url-chrome")), capabilities);
+
         webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
+        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS) ;
+        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS) ;
+
         bingPage = new BingPage(webDriver);
 
         webDriver.manage().window().maximize();
@@ -101,8 +106,17 @@ public class BingTest {
 
         assertTrue(bingPage.isSearchOutputLinkPresent());
         assertEquals(bingPage.getSearchOutputLinks().size(), 10);
-        bingPage.clickSearchOutputLink(id);
-        takeSnapShot(webDriver, "test-bing-" + id + ".png");
+
+        try {
+            bingPage.clickSearchOutputLink(id);
+        } catch (Exception e) {
+            logger.warning("test-bing-" + id + ".png - " + getErrorMessage(e.getMessage()));
+            takeSnapShot(webDriver, "test-bing-" + id + ".png");
+        }
+    }
+
+    private String getErrorMessage(String message) {
+        return message.substring(0, message.indexOf("\n"));
     }
 
     public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{
