@@ -7,13 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -22,22 +22,26 @@ import static org.testng.Assert.assertTrue;
 
 public class BingTest {
 
-    private static WebDriver webDriver;
-    private final static Logger logger = Logger.getLogger(BingTest.class.getName());
-    private static BingPage bingPage;
-    private static Properties props = new Properties();
-    private static DesiredCapabilities capabilities = new DesiredCapabilities(new ChromeOptions());
+    private RemoteWebDriver webDriver;
+    private final Logger logger = Logger.getLogger(BingTest.class.getName());
+    private BingPage bingPage;
+    private DesiredCapabilities capabilities = new DesiredCapabilities(new ChromeOptions());
 
-    static {
-        try {
-            props.load(BingTest.class.getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @BeforeClass
+    public void setUp() throws MalformedURLException {
+        webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
+        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS) ;
+        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS) ;
+
+        bingPage = new BingPage(webDriver);
+
+        webDriver.manage().window().maximize();
     }
 
-    @AfterMethod
-    public static void tearDown() {
+    @AfterClass
+    public void tearDown() {
         webDriver.quit();
     }
 
@@ -92,15 +96,6 @@ public class BingTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
-
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
-        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS) ;
-        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS) ;
-
-        bingPage = new BingPage(webDriver);
-
-        webDriver.manage().window().maximize();
         webDriver.get("https://www.bing.com");
         bingPage.fillSearchBox("cloud automated testing");
 
