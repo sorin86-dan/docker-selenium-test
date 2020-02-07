@@ -1,48 +1,22 @@
 package com.testing;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class BingTest {
+public class BingTest extends BaseTest {
 
-    private RemoteWebDriver webDriver;
     private final Logger logger = Logger.getLogger(BingTest.class.getName());
     private BingPage bingPage;
-    private DesiredCapabilities capabilities = new DesiredCapabilities(new ChromeOptions());
 
     @BeforeClass
-    public void setUp() throws MalformedURLException {
-        webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+    public void setUp() {
+        bingPage = new BingPage(webDriver());
 
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
-        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS) ;
-        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS) ;
-
-        bingPage = new BingPage(webDriver);
-
-        webDriver.manage().window().maximize();
-    }
-
-    @AfterClass
-    public void tearDown() {
-        webDriver.quit();
+        webDriver().manage().window().maximize();
     }
 
     @Test
@@ -96,30 +70,18 @@ public class BingTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver.get("https://www.bing.com");
+        webDriver().get("https://www.bing.com");
         bingPage.fillSearchBox("cloud automated testing");
 
         assertTrue(bingPage.isSearchOutputLinkPresent());
-        assertEquals(bingPage.getSearchOutputLinks().size(), 10);
+        assertTrue(bingPage.getSearchOutputLinks().size() >= 10);
 
         try {
             bingPage.clickSearchOutputLink(id);
         } catch (Exception e) {
             logger.warning("test-bing-" + id + ".png - " + getErrorMessage(e.getMessage()));
-            takeSnapShot(webDriver, "test-bing-" + id + ".png");
+            takeSnapShot(webDriver(), "test-bing-" + id + ".png");
         }
-    }
-
-    private String getErrorMessage(String message) {
-        return message.substring(0, message.indexOf("\n"));
-    }
-
-    public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{
-        TakesScreenshot scrShot =((TakesScreenshot)webdriver);
-        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-        File DestFile = new File(fileWithPath);
-
-        FileUtils.copyFile(SrcFile, DestFile);
     }
 
 }

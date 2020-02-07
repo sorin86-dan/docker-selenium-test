@@ -1,48 +1,22 @@
 package com.testing;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class GoogleTest {
+public class GoogleTest extends BaseTest {
 
-    private RemoteWebDriver webDriver;
     private final Logger logger = Logger.getLogger(GoogleTest.class.getName());
     private GooglePage googlePage;
-    private DesiredCapabilities capabilities = new DesiredCapabilities(new FirefoxOptions());
 
     @BeforeClass
-    public void setUp() throws MalformedURLException {
-        webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+    public void setUp() {
+        googlePage = new GooglePage(webDriver());
 
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS) ;
-        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS) ;
-        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS) ;
-
-        googlePage = new GooglePage(webDriver);
-
-        webDriver.manage().window().maximize();
-    }
-
-    @AfterClass
-    public void tearDown() {
-        webDriver.quit();
+        webDriver().manage().window().maximize();
     }
 
 
@@ -97,29 +71,18 @@ public class GoogleTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver.get("https://www.google.com");
+        webDriver().get("https://www.google.com");
         googlePage.fillSearchBox("cloud automated testing");
 
         assertTrue(googlePage.isSearchOutputLinkPresent());
-        assertEquals(googlePage.getSearchOutputLinks().size(), 10);
+        assertTrue(googlePage.getSearchOutputLinks().size() >= 10);
 
         try {
             googlePage.clickSearchOutputLink(id);
         } catch (Exception e) {
             logger.warning("test-google-" + id + ".png - " + getErrorMessage(e.getMessage()));
-            takeSnapShot(webDriver, "test-google-" + id + ".png");
+            takeSnapShot(webDriver(), "test-google-" + id + ".png");
         }
     }
 
-    private String getErrorMessage(String message) {
-        return message.substring(0, message.indexOf("\n"));
-    }
-
-    public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{
-        TakesScreenshot scrShot =((TakesScreenshot)webdriver);
-        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-        File DestFile = new File(fileWithPath);
-
-        FileUtils.copyFile(SrcFile, DestFile);
-    }
 }
