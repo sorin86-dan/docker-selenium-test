@@ -80,8 +80,9 @@ public class GoogleTest extends BaseTest {
         try {
             googlePage.clickSearchOutputLink(id);
         } catch (Exception e) {
-            logger.warning("test-google-" + id + ".png - " + getErrorMessage(e.getMessage()));
-            takeSnapShot(webDriver(), "test-google-" + id + ".png");
+            logger.warning("test-google-" + id + "-" + browser + ".png - " + getErrorMessage(e.getMessage()));
+            takeSnapShot(webDriver(), "test-google-" + id + "-" + browser + ".png");
+            throw e;
         }
     }
 

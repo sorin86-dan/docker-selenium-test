@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     protected static ThreadLocal<RemoteWebDriver> webDriver = new ThreadLocal<>();
+    protected String browser;
 
     public RemoteWebDriver webDriver() {
         return webDriver.get();
@@ -30,6 +31,7 @@ public class BaseTest {
     @BeforeClass
     protected void setUp(@Optional("chrome") String browser) throws MalformedURLException {
         DesiredCapabilities capabilities;
+        this.browser = browser;
         if(browser.toLowerCase().equals("firefox")) {
             capabilities = new DesiredCapabilities(new FirefoxOptions());
         } else {

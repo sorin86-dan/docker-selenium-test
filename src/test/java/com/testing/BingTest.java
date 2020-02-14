@@ -79,8 +79,9 @@ public class BingTest extends BaseTest {
         try {
             bingPage.clickSearchOutputLink(id);
         } catch (Exception e) {
-            logger.warning("test-bing-" + id + ".png - " + getErrorMessage(e.getMessage()));
-            takeSnapShot(webDriver(), "test-bing-" + id + ".png");
+            logger.warning("test-bing-" + id + "-" + browser + ".png - " + getErrorMessage(e.getMessage()));
+            takeSnapShot(webDriver(), "test-bing-" + id + "-" + browser + ".png");
+            throw e;
         }
     }
 
