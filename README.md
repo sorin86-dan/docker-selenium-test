@@ -32,10 +32,10 @@ If you want to open the selenium node containers create the grid with the follow
  docker network create grid
  docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-zinc
  
- docker run -d -P -p 5901:5900 --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
- docker run -d -P -p 5902:5900 --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
- docker run -d -P -p 5903:5900 --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
- docker run -d -P -p 5904:5900 --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
+ docker run -d -P -p 5901:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
+ docker run -d -P -p 5902:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
+ docker run -d -P -p 5903:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
+ docker run -d -P -p 5904:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
 ```
 and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **<ip-address-of-node>:<port-of-node>** where **<ip-address-of-node>** can be taken from the Selenium hub page and **<port-of-node>** is the one specified in the command above with **590x** (the default password is *secret*). 
 
@@ -61,10 +61,10 @@ If you want to open the selenium node containers create the grid with the follow
  docker network create grid
  docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-zinc
  
- docker run -d -P -p 5901:5900 --net grid -e HUB_HOST=selenium-hub -v /c:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
- docker run -d -P -p 5902:5900 --net grid -e HUB_HOST=selenium-hub -v /c:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
- docker run -d -P -p 5903:5900 --net grid -e HUB_HOST=selenium-hub -v /c:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
- docker run -d -P -p 5904:5900 --net grid -e HUB_HOST=selenium-hub -v /c:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
+ docker run -d -P -p 5901:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /c:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
+ docker run -d -P -p 5902:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /c:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
+ docker run -d -P -p 5903:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /c:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
+ docker run -d -P -p 5904:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /c:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
 ```
 and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **localhost:<port-of-node>** where **<port-of-node>** is the one specified in the command above with **590x** (the default password is *secret*). 
 
