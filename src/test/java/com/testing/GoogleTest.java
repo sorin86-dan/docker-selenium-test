@@ -82,7 +82,6 @@ public class GoogleTest extends BaseTest {
         } catch (Exception e) {
             logger.warning("test-google-" + id + "-" + browser + ".png - " + getErrorMessage(e.getMessage()));
             takeSnapShot(webDriver(), "test-google-" + id + "-" + browser + ".png");
-            throw e;
         }
     }
 
