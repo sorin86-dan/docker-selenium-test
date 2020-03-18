@@ -16,8 +16,8 @@ public class GooglePage extends PageFactory {
     private final static Logger logger = Logger.getLogger(GooglePage.class.getName());
 
     private final static String SEARCH_BOX = "//input[@name='q']";
-    private final static String SEARCH_OUTPUT_LINK_PAY = "//div[@id='search']/../preceding::div//h3";
-    private final static String SEARCH_OUTPUT_LINK_FREE = "//div[@id='search']//h1/following::div/div/h2[text()='Rezultate de pe web']/following-sibling::div//h3";
+    private final static String SEARCH_OUTPUT_LINK_PAY = "//div/../preceding::div//h3";
+    private final static String SEARCH_OUTPUT_LINK_FREE = "//div//h1/following::div/div/h2[text()='Rezultate de pe web']/following-sibling::div//h3";
     private final static String SEARCH_OUTPUT_LINK = SEARCH_OUTPUT_LINK_PAY + "|" + SEARCH_OUTPUT_LINK_FREE;
 
     @FindBy(how = How.XPATH, using = SEARCH_BOX)
