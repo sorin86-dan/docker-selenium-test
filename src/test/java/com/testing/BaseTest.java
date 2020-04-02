@@ -39,7 +39,7 @@ public class BaseTest {
         }
 
 //         webDriver.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities));
-        webDriver = new RemoteWebDriver(new URL("http://172.18.0.2:4444/wd/hub"), capabilities);
+        webDriver.set(new RemoteWebDriver(new URL("http://172.18.0.2:4444/wd/hub"), capabilities));
 
         webDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         webDriver().manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
