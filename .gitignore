@@ -4,3 +4,7 @@
 target
 test-bing*.png
 test-google*.png
+
+.classpath
+.project
+.settings/

@@ -1,11 +1,11 @@
-docker network create grid
-docker run -d -p 4444:4444 --net grid --name selenium-hub selenium/hub:3.141.59-zinc
+docker network create --subnet=172.0.0.0/16 grid
+docker run -d -p 4444:4444 --net grid --ip 172.0.0.2 --name selenium-hub selenium/hub:3.141.59-zinc
 
 #without debug
-docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-zinc
-docker run -d --net grid -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-firefox:3.141.59-zinc
+docker run -d --net grid --ip 172.0.0.3 -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-chrome:3.141.59-zinc
+docker run -d --net grid --ip 172.0.0.4 -e HUB_HOST=selenium-hub -v /dev/shm:/dev/shm selenium/node-firefox:3.141.59-zinc
 
 #with debug
-docker run -d -P -p 5901:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
-docker run -d -P -p 5902:5900 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
+docker run -d -P -p 5901:5900 --net grid --ip 172.0.0.5 -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
+docker run -d -P -p 5902:5900 --net grid --ip 172.0.0.6 -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
 
