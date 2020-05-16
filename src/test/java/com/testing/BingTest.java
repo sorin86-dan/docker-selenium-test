@@ -14,9 +14,9 @@ public class BingTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        bingPage = new BingPage(webDriver());
+        bingPage = new BingPage(webDriver);
 
-        webDriver().manage().window().maximize();
+        webDriver.manage().window().maximize();
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BingTest extends BaseTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver().get("https://www.bing.com");
+        webDriver.get("https://www.bing.com");
         bingPage.fillSearchBox("cloud automated testing");
 
         assertTrue(bingPage.isSearchOutputLinkPresent());
@@ -80,7 +80,7 @@ public class BingTest extends BaseTest {
             bingPage.clickSearchOutputLink(id);
         } catch (Exception e) {
             logger.warning("test-bing-" + id + "-" + browser + ".png - " + getErrorMessage(e.getMessage()));
-            takeSnapShot(webDriver(), "test-bing-" + id + "-" + browser + ".png");
+            takeSnapShot(webDriver, "test-bing-" + id + "-" + browser + ".png");
         }
     }
 

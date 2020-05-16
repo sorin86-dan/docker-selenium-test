@@ -20,17 +20,13 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    protected static ThreadLocal<RemoteWebDriver> webDriver = new ThreadLocal<>();
+    protected RemoteWebDriver webDriver;
     protected String browser;
-
-    public RemoteWebDriver webDriver() {
-        return webDriver.get();
-    }
+    protected DesiredCapabilities capabilities;
 
     @Parameters("browser")
     @BeforeClass
     protected void setUp(@Optional("chrome") String browser) throws MalformedURLException {
-        DesiredCapabilities capabilities;
         this.browser = browser;
         if(browser.toLowerCase().equals("firefox")) {
             capabilities = new DesiredCapabilities(new FirefoxOptions());
@@ -38,18 +34,17 @@ public class BaseTest {
             capabilities = new DesiredCapabilities(new ChromeOptions());
         }
 
-//         webDriver.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities));
-        webDriver.set(new RemoteWebDriver(new URL("http://172.0.0.2:4444/wd/hub"), capabilities));
+        webDriver = new RemoteWebDriver(new URL("http://172.0.0.2:4444/wd/hub"), capabilities);
 
-        webDriver().manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        webDriver().manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-        webDriver().manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
 
     }
 
     @AfterClass
     protected void tearDown() {
-        webDriver().quit();
+        webDriver.quit();
     }
 
     protected String getErrorMessage(String message) {

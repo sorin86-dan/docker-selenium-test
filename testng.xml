@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="TestSuite" parallel="tests" thread-count="4">
-    <!-- need to add parallel specification in test instead of suite because of bug on testng -->
     <test name="testCloudFirefox" parallel="classes" thread-count="2">
         <parameter name="browser" value="firefox"></parameter>
         <classes>

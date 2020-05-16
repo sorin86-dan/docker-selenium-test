@@ -14,9 +14,9 @@ public class GoogleTest extends BaseTest {
 
     @BeforeClass
     public void setUp() {
-        googlePage = new GooglePage(webDriver());
+        googlePage = new GooglePage(webDriver);
 
-        webDriver().manage().window().maximize();
+        webDriver.manage().window().maximize();
     }
 
 
@@ -71,7 +71,7 @@ public class GoogleTest extends BaseTest {
     }
 
     public void runTest(int id) throws Exception {
-        webDriver().get("https://www.google.com");
+        webDriver.get("https://www.google.com");
         googlePage.fillSearchBox("cloud automated testing");
 
         assertTrue(googlePage.isSearchOutputLinkPresent());
@@ -81,7 +81,7 @@ public class GoogleTest extends BaseTest {
             googlePage.clickSearchOutputLink(id);
         } catch (Exception e) {
             logger.warning("test-google-" + id + "-" + browser + ".png - " + getErrorMessage(e.getMessage()));
-            takeSnapShot(webDriver(), "test-google-" + id + "-" + browser + ".png");
+            takeSnapShot(webDriver, "test-google-" + id + "-" + browser + ".png");
         }
     }
 
