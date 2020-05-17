@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import java.util.logging.Logger;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class BingTest extends BaseTest {
@@ -74,7 +75,7 @@ public class BingTest extends BaseTest {
         bingPage.fillSearchBox("cloud automated testing");
 
         assertTrue(bingPage.isSearchOutputLinkPresent());
-        assertTrue(bingPage.getSearchOutputLinks().size() >= 10);
+        assertEquals(bingPage.getSearchOutputLinks().size(), 10);
 
         try {
             bingPage.clickSearchOutputLink(id);

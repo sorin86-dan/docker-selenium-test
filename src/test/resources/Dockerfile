@@ -16,12 +16,6 @@ RUN apt-get update && \
      apt-get install maven -y
 
 #=============================================================
-# Install Vim
-#=============================================================
-RUN apt-get update && \
-     apt-get install vim -y
-
-#=============================================================
 # Clone code
 #=============================================================
 RUN git clone https://github.com/sorin86-dan/docker-selenium-test.git && \
