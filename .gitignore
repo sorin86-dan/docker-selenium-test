@@ -4,6 +4,7 @@
 target
 test-bing*.png
 test-google*.png
+*driver
 
 .classpath
 .project
