@@ -68,4 +68,7 @@ If you want to open the selenium node containers create the grid with the follow
 ```
 and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **localhost:<port-of-node>** where **<port-of-node>** is the one specified in the command above with **590x** (the default password is *secret*). 
 
+# Blog articles
+
+For more info please check: https://t3ch5tuff5.wordpress.com/2020/09/21/containerization-in-test-automation-i-containerization-with-ui-testing/.
 
