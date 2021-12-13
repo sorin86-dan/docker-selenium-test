@@ -4,15 +4,19 @@
     <test name="testCloudFirefox" parallel="classes" thread-count="2">
         <parameter name="browser" value="firefox"></parameter>
         <classes>
-            <class name="com.testing.BingTest"></class>
-            <class name="com.testing.GoogleTest"></class>
+            <class name="com.testing.MainPageTest"></class>
+            <class name="com.testing.BlogPageTest"></class>
+            <class name="com.testing.AboutPageTest"></class>
+            <class name="com.testing.ContactPageTest"></class>
         </classes>
     </test>
     <test name="testCloudChrome" parallel="classes" thread-count="2">
         <parameter name="browser" value="chrome"></parameter>
         <classes>
-            <class name="com.testing.BingTest"></class>
-            <class name="com.testing.GoogleTest"></class>
+            <class name="com.testing.MainPageTest"></class>
+            <class name="com.testing.BlogPageTest"></class>
+            <class name="com.testing.AboutPageTest"></class>
+            <class name="com.testing.ContactPageTest"></class>
         </classes>
     </test>
 </suite>

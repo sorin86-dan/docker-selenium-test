@@ -36,9 +36,9 @@ public class BaseTest {
 
         webDriver = new RemoteWebDriver(new URL("http://172.0.0.2:4444/wd/hub"), capabilities);
 
-        webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-        webDriver.manage().timeouts().setScriptTimeout(5, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
 
     }
 
