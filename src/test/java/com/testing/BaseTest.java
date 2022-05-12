@@ -8,31 +8,26 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
     protected RemoteWebDriver webDriver;
     protected String browser;
-    protected DesiredCapabilities capabilities;
 
     @Parameters("browser")
     @BeforeClass
-    protected void setUp(@Optional("chrome") String browser) throws MalformedURLException {
+    public void setUp(@Optional("chrome") String browser) throws MalformedURLException {
         this.browser = browser;
-        if(browser.toLowerCase().equals("firefox")) {
-            capabilities = new DesiredCapabilities(new FirefoxOptions());
-        } else {
-            capabilities = new DesiredCapabilities(new ChromeOptions());
-        }
+        DesiredCapabilities capabilities = generateBrowserCapabilities(browser);
 
         webDriver = new RemoteWebDriver(new URL("http://172.0.0.2:4444/wd/hub"), capabilities);
 
@@ -42,8 +37,18 @@ public class BaseTest {
 
     }
 
+    private DesiredCapabilities generateBrowserCapabilities(String browser) {
+        if(browser.toLowerCase().equals("chrome")) {
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments(new String[]{"--no-sandbox", "--disable-dev-shm-usage"});
+            return new DesiredCapabilities(chromeOptions);
+        }
+        return new DesiredCapabilities(new FirefoxOptions());
+    }
+
     @AfterClass
-    protected void tearDown() {
+    public void tearDown() throws Exception {
+        takeSnapShot(webDriver, browser + "-" + getClass().getName());
         webDriver.quit();
     }
 
@@ -51,10 +56,10 @@ public class BaseTest {
         return message.substring(0, message.indexOf("\n"));
     }
 
-    public static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{
+    protected static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{
         TakesScreenshot scrShot =((TakesScreenshot)webdriver);
-        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-        File DestFile = new File(fileWithPath);
+        File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+        File DestFile = new File(fileWithPath + ".png");
 
         FileUtils.copyFile(SrcFile, DestFile);
     }
