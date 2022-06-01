@@ -29,11 +29,11 @@ public class BaseTest {
         this.browser = browser;
         DesiredCapabilities capabilities = generateBrowserCapabilities(browser);
 
-        webDriver = new RemoteWebDriver(new URL("http://172.0.0.2:4444/wd/hub"), capabilities);
+        webDriver = new RemoteWebDriver(new URL("http://127.0.0.2:4444/wd/hub"), capabilities);
 
-        webDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        webDriver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        webDriver.manage().timeouts().setScriptTimeout(15, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
 
     }
 
@@ -43,7 +43,9 @@ public class BaseTest {
             chromeOptions.addArguments(new String[]{"--no-sandbox", "--disable-dev-shm-usage"});
             return new DesiredCapabilities(chromeOptions);
         }
-        return new DesiredCapabilities(new FirefoxOptions());
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.addArguments(new String[]{"--no-sandbox"});
+        return new DesiredCapabilities(firefoxOptions);
     }
 
     @AfterClass

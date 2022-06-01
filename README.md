@@ -70,5 +70,7 @@ and open Selenium hub page in browser as explained above. You need to install VN
 
 # Blog articles
 
-For more info please check: https://t3ch5tuff5.wordpress.com/2020/09/21/containerization-in-test-automation-i-containerization-with-ui-testing/.
+For more info please check: 
+ - https://t3ch5tuff5.wordpress.com/2020/09/21/containerization-in-test-automation-i-containerization-with-ui-testing/;
+ - https://t3ch5tuff5.wordpress.com/2022/06/01/%ef%bf%bctest-automation-and-containerization-iv-ui-testing-using-selenium-grid-and-kubernetes/.
 

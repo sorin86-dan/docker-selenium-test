@@ -18,10 +18,10 @@ public class BlogPageTest extends BaseTest {
         BlogPage blogPage = new BlogPage(webDriver).clickBlogMenu();
 
         assertEquals(blogPage.getPageTitle(), "Blog");
-        assertEquals(blogPage.getArticleTitle(1),"Test Automation and Containerization (III) – UI testing using Selenium Grid and Testcontainers");
-        assertEquals(blogPage.getArticleTitle(2),"Test automation and Cloud technologies — Part II: Using AWS ECR and AWS EC2");
-        assertEquals(blogPage.getArticleTitle(3),"Test Automation and Containerization (II) – Containerization with microservices testing");
-        assertEquals(blogPage.getArticleTitle(4),"Test Automation and Containerization (I) – Containerization with UI testing");
+        assertEquals(blogPage.getArticleTitle(1),"Test automation and Containerization (IV) – UI testing using Selenium Grid and Kubernetes");
+        assertEquals(blogPage.getArticleTitle(2),"Test automation and Containerization (III) – UI testing using Selenium Grid and Testcontainers");
+        assertEquals(blogPage.getArticleTitle(3),"Test automation and Cloud technologies — Part II: Using AWS ECR and AWS EC2");
+        assertEquals(blogPage.getArticleTitle(4),"Test automation and Containerization (II) – Containerization with microservices testing");
     }
 
 }
