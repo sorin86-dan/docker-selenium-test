@@ -50,12 +50,8 @@ public class BaseTest {
 
     @AfterClass
     public void tearDown() throws Exception {
-        takeSnapShot(webDriver, browser + "-" + getClass().getName());
+//        takeSnapShot(webDriver, browser + "-" + getClass().getName());
         webDriver.quit();
-    }
-
-    protected String getErrorMessage(String message) {
-        return message.substring(0, message.indexOf("\n"));
     }
 
     protected static void takeSnapShot(WebDriver webdriver, String fileWithPath) throws Exception{

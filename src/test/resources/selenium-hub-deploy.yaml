@@ -12,21 +12,21 @@ spec:
         app: selenium-hub
     spec:
       containers:
-      - name: selenium-hub
-        image: selenium/hub:3.141.59
-        resources:
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"
-        ports:
-          - containerPort: 4444
-        livenessProbe:
+        - name: selenium-hub
+          image: selenium/hub:3.141.59
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 4444
+          livenessProbe:
             httpGet:
               path: /grid/console
               port: 4444
             initialDelaySeconds: 30
             timeoutSeconds: 5
-        readinessProbe:
+          readinessProbe:
             httpGet:
               path: /grid/console
               port: 4444

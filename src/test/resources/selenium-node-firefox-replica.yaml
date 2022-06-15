@@ -20,7 +20,6 @@ spec:
             - containerPort: 5556
           env:
             - name: HUB_HOST
-              value: "selenium-hub-srv"
+              value: "selenium-hub"
             - name: HUB_PORT
               value: "4444"
-

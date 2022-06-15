@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: selenium-chrome-rep	
-spec:	
+  name: selenium-chrome-rep
+spec:
   replicas: 2
   selector:
     matchLabels:
@@ -20,6 +20,6 @@ spec:
             - containerPort: 5555
           env:
             - name: HUB_HOST
-              value: "selenium-hub-srv"
+              value: "selenium-hub"
             - name: HUB_PORT
               value: "4444"

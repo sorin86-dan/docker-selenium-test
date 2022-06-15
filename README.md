@@ -68,6 +68,32 @@ If you want to open the selenium node containers create the grid with the follow
 ```
 and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **localhost:<port-of-node>** where **<port-of-node>** is the one specified in the command above with **590x** (the default password is *secret*). 
 
+# Running parallel tests with Kubernetes (Minikube)
+
+1. Create a Kubernetes network with a Selenium hub, 2 Chrome nodes and 2 Firefox nodes.
+2. Update the ip and port in BaseTests.java with the value taken from step 1.
+3. Start running the tests.
+
+It's just as simply as that!
+
+## Linux (Ubuntu)
+
+### Create Kubernetes network for Selenium tests
+To build the Kubernetes network make sure you have a valid Internet connection and run the commands below:
+```shell script
+kubectl apply -f src/test/resources/selenium-node-chrome-replica.yaml
+kubectl apply -f src/test/resources/selenium-node-firefox-replica.yaml
+kubectl apply -f src/test/resources/selenium-node-hub-deploy.yaml
+kubectl apply -f src/test/resources/selenium-node-hub-service.yaml
+```
+
+### Check the load on the nodes
+You need to open Selenium hub page for this. So run command
+```shell script
+minikube service selenium-hub --url
+```
+and open in browser: **http://<ip-address-and-port-from-previous-step>/grid/console**
+
 # Blog articles
 
 For more info please check: 
