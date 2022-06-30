@@ -94,6 +94,13 @@ minikube service selenium-hub --url
 ```
 and open in browser: **http://<ip-address-and-port-from-previous-step>/grid/console**
 
+If you want to check the logs run command
+```shell script
+minikube dashboard
+```
+
+and on the dashboard page go to **Workloads ->Pods**. From there you can choose for which element from Selenium Grid (which pod) you want to see the logs. Click the chosen pod and on the top right click the leftest button (**View Logs**).
+
 # Blog articles
 
 For more info please check: 
