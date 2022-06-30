@@ -25,7 +25,7 @@ You need to open Selenium hub page for this. So run commands
 docker ps
 docker inspect <container-id-for-selenium-hub> | grep "IPAddress"
 ```
-and open in browser: **http://<ip-address-from-previous-step>:4444/grid/console**
+and open in browser: **http://[ip-address-from-previous-step]:4444/grid/console**
 
 If you want to open the selenium node containers create the grid with the following commands:
 ```shell script
@@ -37,7 +37,7 @@ If you want to open the selenium node containers create the grid with the follow
  docker run -d -P -p 5903:5900 --net grid --ip 172.0.0.5 -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
  docker run -d -P -p 5904:5900 --net grid --ip 172.0.0.6 -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /dev/shm:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
 ```
-and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **<ip-address-of-node>:<port-of-node>** where **<ip-address-of-node>** can be taken from the Selenium hub page and **<port-of-node>** is the one specified in the command above with **590x** (the default password is *secret*). 
+and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **[ip-address-of-node]:[port-of-node]** where **[ip-address-of-node]** can be taken from the Selenium hub page and **[port-of-node]** is the one specified in the command above with **590x** (the default password is *secret*). 
 
 ## Windows
 
@@ -66,7 +66,7 @@ If you want to open the selenium node containers create the grid with the follow
  docker run -d -P -p 5903:5900 --ip 172.0.0.5 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /c:/dev/shm selenium/node-chrome-debug:3.141.59-zinc
  docker run -d -P -p 5904:5900 --ip 172.0.0.6 --net grid -e HUB_HOST=selenium-hub --link selenium-hub:hub -v /c:/dev/shm selenium/node-firefox-debug:3.141.59-zinc
 ```
-and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **localhost:<port-of-node>** where **<port-of-node>** is the one specified in the command above with **590x** (the default password is *secret*). 
+and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **localhost:[port-of-node]** where **[port-of-node]** is the one specified in the command above with **590x** (the default password is *secret*). 
 
 # Running parallel tests with Kubernetes (Minikube)
 
@@ -92,7 +92,7 @@ You need to open Selenium hub page for this. So run command
 ```shell script
 minikube service selenium-hub --url
 ```
-and open in browser: **http://<ip-address-and-port-from-previous-step>/grid/console**
+and open in browser: **http://[ip-address-and-port-from-previous-step]/grid/console**
 
 If you want to check the logs run command
 ```shell script
