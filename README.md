@@ -68,7 +68,7 @@ If you want to open the selenium node containers create the grid with the follow
 ```
 and open Selenium hub page in browser as explained above. You need to install VNC Viewer and connect to **localhost:[port-of-node]** where **[port-of-node]** is the one specified in the command above with **590x** (the default password is *secret*). 
 
-# Running parallel tests with Kubernetes (Minikube)
+# Running parallel tests with Kubernetes
 
 1. Create a Kubernetes network with a Selenium hub, 2 Chrome nodes and 2 Firefox nodes.
 2. Update the ip and port in BaseTests.java with the value taken from step 1.
@@ -76,7 +76,7 @@ and open Selenium hub page in browser as explained above. You need to install VN
 
 It's just as simply as that!
 
-## Linux (Ubuntu)
+## Minikube
 
 ### Create Kubernetes network for Selenium tests
 To build the Kubernetes network make sure you have a valid Internet connection and run the commands below:
@@ -100,6 +100,37 @@ minikube dashboard
 ```
 
 and on the dashboard page go to **Workloads ->Pods**. From there you can choose for which element from Selenium Grid (which pod) you want to see the logs. Click the chosen pod and on the top right click the leftest button (**View Logs**).
+
+## Microk8s
+
+### Create Kubernetes network for Selenium tests
+To build the Kubernetes network make sure you have a valid Internet connection, set service type to be NodePort and run the commands below:
+```shell script
+microk8s kubectl apply -f src/test/resources/selenium-node-hub-deploy.yaml
+# Make sure that you have in src/test/resources/selenium-node-hub-service.yaml set the value 'type: LoadBalancer'
+microk8s kubectl apply -f src/test/resources/selenium-node-hub-service.yaml
+microk8s kubectl apply -f src/test/resources/selenium-node-chrome-replica.yaml
+microk8s kubectl apply -f src/test/resources/selenium-node-firefox-replica.yaml
+microk8s kubectl port-forward service/selenium-hub 4444:4444
+```
+
+### Check the load on the nodes
+Open in browser: **http://127.0.0.1/grid/console**
+
+If you want to check the logs run commands
+```shell script
+microk8s.enable dashboard
+
+# For MicroK8s 1.24 or newer:
+microk8s kubectl create token default
+# For MicroK8s 1.23 or older:
+token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
+microk8s kubectl -n kube-system describe secret $token
+
+microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
+```
+
+and you can access the dashboard page at the url https://127.0.0.1:10443. In the dashboard page go to **Workloads ->Pods**. From there you can choose for which element from Selenium Grid (which pod) you want to see the logs. Click the chosen pod and on the top right click the leftest button (**View Logs**).
 
 # Blog articles
 
